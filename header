@@ -1,0 +1,106 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2014 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+/**
+ * @var Mage_Page_Block_Html_Header $this
+ */
+?>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/> 
+<?php
+if($_SERVER['REQUEST_URI']=='/')
+{
+?>
+<!--<meta name="apple-itunes-app" content="app-id=977872390" />-->
+<meta name="google-play-app" content="app-id=com.blueberry.store">
+<link rel="stylesheet" href="/js/jquery.smartbanner.css" type="text/css" media="screen">
+<?php
+}
+?>
+<?php $helper = $this->helper('mpanel'); ?>
+<?php $setting = $helper->getThemeSettings(); ?>
+<div class="page-content-header header-v1<?php if (Mage::getStoreConfig('mgs_theme/general/sticky_menu')): ?> sticky-menu<?php endif ?>">
+	<div class="middle-header-content">
+		<div class="container-fluid">
+		
+			<?php if ($this->getIsHomePage()): ?>
+				<h1 class="logo">
+					<img src="<?php echo $this->getLogoSrc() ?>" alt="<?php echo $this->getLogoAlt() ?>" />
+				</h1>
+			<?php else: ?>
+				<a href="<?php echo $this->getUrl('') ?>" title="<?php echo $this->getLogoAlt() ?>" class="logo">
+					<img src="<?php echo $this->getLogoSrc() ?>" alt="<?php echo $this->getLogoAlt() ?>" />
+				</a>
+			<?php endif ?>
+			
+			<?php echo $this->getChildHtml('topMenu') ?>
+			
+			<div class="dropdowns-container">
+				<div class="dropdowns-wrapper">
+					<button id="show-menu-responsive" class="btn-responsive-menu visible-sm visible-xs" type="button"><i class="fa fa-bars" aria-hidden="true"></i></button>
+					
+					<ul class="header-dropdown account-dropdown dropdown">
+						<li>
+							<a class="dropdown-toggle" href="javascript:void(0)" data-toggle="dropdown" title="<?php echo $this->__('My Account'); ?>">
+								<i class="fa fa-user"></i>
+								<span><?php echo $this->__('My Account'); ?></span>
+							</a>
+							<?php echo $this->getChildHtml('topLinks') ?>
+						</li>
+					</ul>
+					
+					<?php echo $this->getChildHtml('cart_header')?>
+					<?php if(count(Mage::app()->getStore()->getAvailableCurrencyCodes(true)) > 1 || count(Mage::app()->getStores()) > 1): ?>
+					<ul class="header-dropdown currency-language">
+						<li>
+							<a href="javascript:void(0)" 
+								title="<?php if(count(Mage::app()->getStores()) > 1): ?><?php echo $this->__('Currency'); ?><?php endif ?><?php if(count(Mage::app()->getStore()->getAvailableCurrencyCodes(true)) > 1 && count(Mage::app()->getStores()) > 1): ?>/<?php endif ?><?php if(count(Mage::app()->getStores()) > 1): ?><?php echo $this->__('Language'); ?><?php endif ?>">
+								<i class="fa fa-globe"></i>
+							</a>
+							<ul>
+								<?php if(count(Mage::app()->getStores()) > 1): ?>
+								<li>
+									<a href="javascript:void(0)"><i class="fa fa-flag"></i><span><?php echo $this->__('Language'); ?></span></a>
+									<?php echo $this->getChildHtml('store_language') ?>
+								</li>
+								<?php endif ?>
+								<?php if(count(Mage::app()->getStore()->getAvailableCurrencyCodes(true)) > 1): ?>
+								<li>
+									<a href="javascript:void(0)"><i class="fa fa-credit-card"></i><span><?php echo $this->__('Currency'); ?></span></a>
+									<?php echo $this->getChildHtml('top.currency') ?>
+								</li>
+								<?php endif ?>
+							</ul>
+						</li>
+					</ul>
+					<?php endif ?>
+				</div>
+			</div>
+			
+			<?php if($setting['right_sidebar']!='1'): ?>
+				<?php echo $this->getChildHtml('topSearch') ?>
+			<?php endif ?>
+		</div>
+	</div>
+</div>
